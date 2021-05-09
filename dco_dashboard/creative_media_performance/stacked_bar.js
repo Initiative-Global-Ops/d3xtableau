@@ -158,41 +158,167 @@
         const y2Accessor = d => d.conv_rate
         const add_commas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         const tactic = d => d.tactic
+        const capitalizeFirstLetter = d => d.charAt(0).toUpperCase() + d.slice(1)
+        var colors = ["#A3294A","#4e79a7","#5EC7EB","#3F7F91"];
+ 
+   
+
+        var current_tactics = []
+        for (let i=0; i < arr.length; i++){
+            let c = arr[i].tactic
+            current_tactics.push(c)
+        }
+        // console.log("current_tactics", current_tactics)
+
+        var tactic_list = [...new Set(current_tactics)]
+
+        // console.log("tactic_list", tactic_list)
+
+        var arrs = []
+        for (let j=0; j < tactic_list.length ; j++){
+            arrs.push([])
+        }
+        
+
+        for ( let i=0; i < arr.length ; i++){
+            for (let j=0; j < tactic_list.length ; j++){
+                 if (arr[i].tactic == tactic_list[j] ){
+                    arrs[j].push(arr[i])
+                  
+                 }
+             }
+        }
+        // arrs.push([])
+        // for ( let i=0; i < arr.length ; i++){
+        //     if (arr[i].tactic == tactic_list[0] ){
+        //         arrs[arrs.length-1].push(arr[i])
+
+        //     }
+        // }
+        
+        var firstDates = [];
+        var lastDates = [];
+        for ( let i=0; i < arrs.length; i++){
+            firstDates.push(new Date(arrs[i][0].date).getTime())
+            lastDates.push(new Date(arrs[i][arrs[i].length-1].date).getTime())
+        }
+
+        
+        let firstDate = new Date(Math.min.apply(Math, firstDates))
+        let lastDate = new Date(Math.max.apply(Math, lastDates))
+        console.log(firstDate, lastDate)
+
+        Date.prototype.addDays = function(days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        }  
+
+        function getDates(startDate, stopDate) {
+            var dateArray = new Array();
+            var currentDate = startDate;
+            while (currentDate <= stopDate) {
+                dateArray.push(new Date (currentDate));
+                currentDate = currentDate.addDays(1);
+            }
+            return dateArray;
+        }
+
+        var date_list = getDates(firstDate, lastDate)
+
+        // console.log(dateParser(arrs[0][0].date))
+        console.log(date_list)
+        date_list[1].setHours(0,0,0,0)
+        console.log(date_list[1])
 
 
-        var arr_1 = []
-        var arr_2 = []
-        var arr_3 = []
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].tactic == 'Lookalike') {
-                arr_1.push(arr[i])
-            } else if (arr[i].tactic == 'Behavioral') {
-                arr_2.push(arr[i])
-            } else if (arr[i].tactic == 'In Market') {
-                arr_3.push(arr[i])
+        console.log("date_list", date_list)
+
+        function dateFormatter(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+        
+            if (month.length < 2) 
+                month = '0' + month;
+            if (day.length < 2) 
+                day = '0' + day;
+        
+            return [year, month, day].join('-');
+        }
+
+        var date_list_1 = [];
+        var arrs_date = [];
+        for(let x = 0; x < arrs.length; x++){  
+            for(let i = 0; i < arrs[x].length; i++){  
+            let c = arrs[x][i].date
+            arrs_date.push(c)
             }
         }
 
-        var j = 0;
-        var arr1_imp;
-        var imp_tac = [];
-        for(let i=0; i<arr_3.length; i++){
-          if (arr_3[i].date == arr_1[j].date){
-            arr1_imp = arr_1[j].impressions
-            j++;
-          }else{
-            arr1_imp = 0
-          }
-          imp_tac.push({
-            'date': arr_3[i].date,
-            'imp1': arr1_imp,
-            'imp2': arr_2[i].impressions,
-            'imp3': arr_3[i].impressions
-          })
+        for(let i = 0; i < date_list.length; i++){  
+            let c = dateFormatter(date_list[i])
+            date_list_1.push(c)
         }
-        console.log(arr_1,arr_2,arr_3)
 
-        console.log(imp_tac)
+    
+        // console.log("date_list", date_list)
+
+        // console.log("arrs_date", arrs_date)
+        // console.log("date_list_1", date_list_1)
+
+        console.log(date_list_1[1] == arrs_date[0])
+        console.log(date_list_1.length , arrs_date.length)
+        console.log(date_list_1, arrs_date)
+
+        // var arr1_idx = 0; var arr2_idx = 0; var arr3_idx = 0;
+        // var arr1_imp; var arr2_imp; var arr3_imp;
+
+        // let arr_imp = [];
+        //     for (let i = 1; i < arrs.length + 1 ; i++){
+        //         let c = "arr" + i + "_idx"
+        //         let v = "arr" + i + "_imp"
+        //         arr_idx.push(c)
+        //         arr_imp.push(v)
+        //     }
+
+            console.log("date_list", date_list[[0]])
+            console.log("arrs", arrs)
+            console.log("arr_imp", arr_imp)
+
+        for(let i = 0; i < arrs.length; i++){  
+            console.log(arrs[i][0].date)
+        }
+
+        let arr_idx = [];
+        for ( let i =0; i < arrs.length; i++){
+            arr_idx.push(0)
+        }
+
+        var imp_tac = [];
+        var arr_imp;
+        for(let i = 0; i < date_list_1.length; i++){  
+            arr_imp = []
+            for( let j = 0; j < arrs.length; j++){ 
+                if (date_list_1[i] == arrs[j][arr_idx[j]].date){
+                    arr_imp.push(arrs[j][arr_idx[j]].impressions)
+                    arr_idx[j]++;
+                } else {
+                    arr_imp.push(0)
+                }     
+            }
+
+            let imp_tac_json = {};
+            imp_tac_json['date'] = date_list_1[i]
+            for( let j = 0; j < arrs.length; j++){ 
+                imp_tac_json['imp'+(j+1)] = arr_imp[j]
+            }
+            imp_tac.push(imp_tac_json)
+    }
+
+        console.log("imp_tac",imp_tac)
+
 
 
        var subgroups = ['imp1', 'imp2', 'imp3']
@@ -222,6 +348,69 @@
         dimensions.boundedHeight = dimensions.height -
             dimensions.margin.top -
             dimensions.margin.bottom
+
+
+            // LEGEND // 
+
+     
+        var legends = d3.select("#legend")
+        .append("div")
+        .attr("class", "legend_container")
+
+        var legend_div = legends.append("svg")
+        .attr("width", dimensions.width)
+        .attr("height", "30px")
+
+
+
+        var legend_keys = tactic_list
+
+        var legend_colorScale = d3.scaleOrdinal()
+        .domain(legend_keys)
+        .range(colors)
+
+        var txt_width_so_far = 0
+        var txt_width = [0];
+        for ( let i=0 ; i < legend_keys.length ; i++){
+            let c = legend_keys[i].length
+            txt_width_so_far += c + 2
+            txt_width.push(txt_width_so_far)
+        }
+
+        let area_ids = []
+        let checkbox_ids = [] 
+
+        for (let i = 0; i < arr.length; i++){
+            let checkbox_id = "checkbox_" + i
+            checkbox_ids.push(checkbox_id)
+        }
+    
+     
+
+        let dim = 10
+        legend_div.selectAll("keys")
+        .data(legend_keys)
+        .enter()
+        .append("rect")
+            .attr("x",function(d, i){ return 25 + txt_width[i]* 6})
+            .attr("y", 10) 
+            .attr("width", dim)
+            .attr("height", dim)
+            .attr("id",function(d, i){checkbox_ids[i]})
+            .attr("class", "legend_container")
+            .attr("fill", legend_colorScale);
+    
+
+        legend_div.selectAll("labels")
+        .data(legend_keys)
+        .enter()
+        .append("text")
+        .attr("y", 19)
+        .attr("x",function(d, i){ return 38 + txt_width[i] * 6})
+            .style("fill", "#1b261c")
+            .text(function(d){ return capitalizeFirstLetter(d)})    
+            .attr("text-anchor", "left")
+            .attr("class", "legend_label")
 
         const wrapper = d3.select("#wrapper")
             .append("svg")

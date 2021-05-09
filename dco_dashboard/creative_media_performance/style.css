@@ -30,7 +30,7 @@ div.DTS div.dataTables_scrollBody {
 
 .sheet_name {
     background-color: #F5F2EE;
-    font-size: 24px;
+    font-size: 22px;
     font-family: "League Gothic";
     /* text-transform: uppercase; */
     color:#1B2326;
@@ -40,14 +40,26 @@ div.DTS div.dataTables_scrollBody {
     display: flex;
 }
 
-.container{
-  margin: 0px;
+.legend_container{
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -30px;
+  margin-left: 260px;
 }
 
-.legends{
-  display: flex;
-  margin-top:10px;
+
+.legend_label{
+  /* width:max-content;
+  position: relative;
+  display: inline-flex; */
+  letter-spacing: -0.5px;
+  font-weight: bold;
+  font-family: "Arial";
+  font-size: 10px;
+  /* margin-left:20px; */
 }
+
 
 .legend_name{
   display: flex;
