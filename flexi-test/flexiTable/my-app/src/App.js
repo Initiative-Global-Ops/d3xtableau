@@ -1,40 +1,22 @@
-import React from "react";
-require("./App.css");
+import {AgGridColumn, AgGridReact} from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { useEffect, useState, useRef } from 'react';
+import Table from './Table';
+import DataGetter from './DataGetter.js';
 
-//Needed
-const { tableau } = window;
+const App = () => {
+  const [data, setData] = useState(0);
+  const [columns, setColumns] = useState(0);
 
-class AppComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { dashboardName: "" };
-  }
 
-  componentDidMount() {
-    tableau.extensions.initializeAsync().then(() => {
-      const dashboardName = tableau.extensions.dashboardContent.dashboard.name;   
-      tableau.extensions.dashboardContent.dashboard.worksheets.find(w => w.name === "D3 DATA").getUnderlyingDataAsync().then(dataTable => {
-        console.log('data columns',dataTable.columns)
-        console.log('all data',dataTable.data)
+  return (
+    <div className="table-container" style={{ height: 400, width: 600 }}>
+       <Table data={data} columns={columns}/>
+       <DataGetter data={data} setData={setData} columns={columns} setColumns={setColumns}/>
+    </div>
+  );
+};
 
-        let field = dataTable.columns.find(column => column.fieldName === "Impressions");
-        let list = [];
-        for (let row of dataTable.data) {
-          list.push(row[field.index].value);
-        }
-        let values = list.filter((el, i, arr) => arr.indexOf(el) === i);
-        console.log(values)
-      });
-      
-      this.setState({
-        dashboardName
-      });
-    });
-  }
+export default App;
 
-  render() {
-    return <h1> Hello -- {this.state.dashboardName}</h1>;
-  }
-}
-
-export default AppComponent;

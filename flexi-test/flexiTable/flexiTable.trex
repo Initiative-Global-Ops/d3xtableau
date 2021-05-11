@@ -7,7 +7,8 @@
     <author name="Batool Akbar" email="batool.akbar@initiative.com" organization="Initiative" website="https://initiative.com"/>
     <min-api-version>1.0</min-api-version>
     <source-location>
-      <url>http://localhost:3000</url> 
+    <url>https://initiative-global-ops.github.io/d3xtableau/flexi-test/flexiTable/my-app/public/index.html</url>
+      <!-- <url>http://localhost:3000</url>  -->
     </source-location>
         <icon></icon>
         <permissions>
