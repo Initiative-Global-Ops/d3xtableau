@@ -50,15 +50,7 @@
                      }
                  }
 
-
-                 if (dataJson['Tactic'] == ['Lookalike'] ||
-                     dataJson['Tactic'] == ['Behavioral'] ||
-                     dataJson['Tactic'] == ['In Market']) {
-                     newArr.push(dataJson);
-                 }
-
-
-
+                 newArr.push(dataJson);
 
 
              });
@@ -285,7 +277,7 @@
 
             console.log("date_list", date_list[[0]])
             console.log("arrs", arrs)
-            console.log("arr_imp", arr_imp)
+            console.log("date_list_1", date_list_1)
 
         for(let i = 0; i < arrs.length; i++){  
             console.log(arrs[i][0].date)
