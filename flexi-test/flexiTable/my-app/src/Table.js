@@ -5,19 +5,24 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import './styles.css';
+// import 'ag-grid-enterprise';
 import { useEffect, useState, useRef } from 'react';
 import BtnCellRenderer from "./BtnCellRenderer.jsx";
 
-// const Table = (props) => {
-    // const {data, columns} = props
+
     const pagination = true;
-    const paginationPageSize = 10;
-    // const rowHeight = 40;
+    const paginationPageSize = 100;
+    const rowHeight = 30;
+    const suppressRowTransform = true;
     
     class Table extends Component {
     constructor(props) {
         super(props);
-    
+    // console.log("data", props.data)
+    // console.log("columns", props.columns)
+
+
         this.state = {
           columnDefs: [
             {
@@ -31,25 +36,37 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
               minWidth: 150
             },
             {
-              field: "Advertiser",
-              maxWidth: 90
-            },
-            {
               field: "Date",
-              minWidth: 150
+              minWidth: 150,
+              suppressMenu: true
             },
             {
               field: "Impressions",
-              maxWidth: 90
+              maxWidth: 150,
+              suppressMenu: true
+            },
+            {
+              field: "CTR",
+              maxWidth: 150,
+              suppressMenu: true
+            },
+            {
+              field: "Clicks",
+              maxWidth: 150,
+              suppressMenu: true
             },
             {
               field: "Conversion Rate",
-              minWidth: 150
+              minWidth: 150,
+              suppressMenu: true
             }
           ],
           defaultColDef: {
             flex: 1,
-            minWidth: 100
+            minWidth: 100,
+            filter: true,
+            sortable: true,
+            floatingFilter: true,
           },
           frameworkComponents: {
             btnCellRenderer: BtnCellRenderer
@@ -58,41 +75,51 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
         };
       }
 
+    //   irelandAndUk = () => {
+    //     var countryFilterComponent = this.gridApi.getFilterInstance('Tactic');
+    //     countryFilterComponent.setModel({
+    //       values: 'In Market',
+    //     });
+    //     this.gridApi.onFilterChanged();
+    //   };
 
-      
-      onGridReady = (params) => {
-        this.gridApi = params.api;
-        this.gridColumnApi = params.columnApi;
-    
-        const updateData = (data) => {
-          this.setState({ rowData: data });
-        };
-    
-        // updateData(data);
-        fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
-          .then((resp) => resp.json())
-          .then((data) => updateData(data));
-      };
+
+
+
 
       render() {
         return (
-          <div style={{ width: 600, height: 450 }}>
+          <div style={{ width: "100vw", height: "100vh" }}>
+              <div
+          style={{ marginTop:'10px', marginLeft:'20px',height: '10%', display: 'flex', flexDirection: 'column' }}
+             >
+          <div>
+            <span className="button-group">
+              <button>
+                In Market
+              </button>
+            </span>
+            </div>
+        </div>
             <div
               id="myGrid"
               style={{
                 height: "100vh",
-                width: "95vw"
+                width: "100vw"
               }}
               className="ag-theme-alpine"
             >
               <AgGridReact
                 columnDefs={this.state.columnDefs}
                 defaultColDef={this.state.defaultColDef}
+                floatingFilter={true}
                 frameworkComponents={this.state.frameworkComponents}
                 onGridReady={this.onGridReady}
-                rowData={this.state.rowData}
+                rowData={this.props.data}
+                rowHeight={rowHeight}
                 pagination={pagination} 
                 paginationPageSize={paginationPageSize}
+                suppressRowTransform={suppressRowTransform}
               />
             </div>
           </div>
@@ -100,9 +127,6 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
       }
 
     }
-    // render(<Table />, document.querySelector("#root"));
-
-// };
 
 export default Table;
 

@@ -1,0 +1,6 @@
+.ag-row .ag-cell {
+  display: flex;
+  justify-content: left; /* align horizontal */
+  align-items: center;
+  font-size: 12px;
+}
