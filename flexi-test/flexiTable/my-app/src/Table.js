@@ -15,25 +15,22 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
     const paginationPageSize = 100;
     const rowHeight = 30;
     const suppressRowTransform = true;
+
+    
     
     class Table extends Component {
     constructor(props) {
         super(props);
-    // console.log("data", props.data)
+    // console.log("data", props.data[0])
     // console.log("columns", props.columns)
 
 
         this.state = {
           columnDefs: [
             {
-              field: "Tactic",
-              cellRenderer: "btnCellRenderer",
-              cellRendererParams: {
-                clicked: function(field) {
-                  alert(`${field} was clicked`);
-                }
-              },
-              minWidth: 150
+              field: "Audience",
+              minWidth: 150,
+              suppressMenu: true
             },
             {
               field: "Date",
@@ -43,24 +40,29 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
             {
               field: "Impressions",
               maxWidth: 150,
-              suppressMenu: true
+              filter: false,
+             
             },
             {
               field: "CTR",
               maxWidth: 150,
-              suppressMenu: true
+              filter: false,
+          
             },
             {
               field: "Clicks",
               maxWidth: 150,
-              suppressMenu: true
+              filter: false,
+
+              
             },
             {
               field: "Conversion Rate",
               minWidth: 150,
-              suppressMenu: true
+              filter: false,
             }
           ],
+          
           defaultColDef: {
             flex: 1,
             minWidth: 100,
@@ -68,22 +70,35 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
             sortable: true,
             floatingFilter: true,
           },
+          rowData: [],
           frameworkComponents: {
             btnCellRenderer: BtnCellRenderer
           },
-          rowData: []
         };
+
       }
 
-    //   irelandAndUk = () => {
-    //     var countryFilterComponent = this.gridApi.getFilterInstance('Tactic');
-    //     countryFilterComponent.setModel({
-    //       values: 'In Market',
-    //     });
-    //     this.gridApi.onFilterChanged();
+      
+      onGridReady = (params) => {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+      };
+    
+    //   onFirstDataRendered = (params) => {
+    //     params.api.getToolPanelInstance('filters').expandFilters();
     //   };
+    
+      btn1 = () => {
+        this.gridApi.setRowData(getRowData(this.props.data, "K-Cafe"));
+      };
+      btn2 = () => {
+        this.gridApi.setRowData(getRowData(this.props.data, "K-Compact"));
+      };
+      btn3 = () => {
+        this.gridApi.setRowData(getRowData(this.props.data, "K-Duo"));
+      };
 
-
+        
 
 
 
@@ -91,20 +106,31 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
         return (
           <div style={{ width: "100vw", height: "100vh" }}>
               <div
-          style={{ marginTop:'10px', marginLeft:'20px',height: '10%', display: 'flex', flexDirection: 'column' }}
+          style={{ marginTop:'10px', marginLeft:'10px',height: '8%', display: 'flex', flexDirection: 'column' }}
              >
           <div>
-            <span className="button-group">
+            <span className="button-group" onClick={() => this.btn1()}>
               <button>
-                In Market
+             K-Cafe
               </button>
             </span>
+            <span className="button-group" onClick={() => this.btn2()}>
+              <button>
+                K-Compact
+              </button>
+            </span>
+            <span className="button-group" onClick={() => this.btn3()}>
+              <button>
+                K-Duo
+              </button>
+            </span>
+
             </div>
         </div>
             <div
               id="myGrid"
               style={{
-                height: "100vh",
+                height: "90vh",
                 width: "100vw"
               }}
               className="ag-theme-alpine"
@@ -125,8 +151,18 @@ import BtnCellRenderer from "./BtnCellRenderer.jsx";
           </div>
         );
       }
-
     }
+
+    function getRowData(data, key) {
+        var filtered_data = [];
+        for ( let i=0; i< data.length; i++){
+            if (data[i].Product == key){
+                filtered_data.push(data[i])
+            }
+        }
+
+        return filtered_data
+      }
 
 export default Table;
 

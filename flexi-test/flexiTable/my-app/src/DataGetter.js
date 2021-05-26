@@ -14,7 +14,7 @@ function DataGetter(props){
   // console.log("useEffect", useEffect)
     tableau.extensions.initializeAsync().then(() => {
       const dashboardName = tableau.extensions.dashboardContent.dashboard.name;   
-      tableau.extensions.dashboardContent.dashboard.worksheets.find(w => w.name === "D3 DATA").getUnderlyingDataAsync().then(dataTable => {
+      tableau.extensions.dashboardContent.dashboard.worksheets.find(w => w.name === "flexiTable").getUnderlyingDataAsync().then(dataTable => {
         // console.log('data columns',dataTable.columns)
         // console.log('all data',dataTable.data)
     
