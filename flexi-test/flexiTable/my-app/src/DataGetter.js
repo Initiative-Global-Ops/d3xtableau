@@ -24,27 +24,17 @@ function DataGetter(props){
         dataTable.columns.map(d => {
           cols.push(d.fieldName);
        })
-    
+
        dataTable.data.map(d => {
           dataJson = {};
           for (let i = 0; i < cols.length; i++) {   
-            if (cols[i].includes("AGG(Conversion Rate)") || cols[i].includes("SUM(Impressions)")) {
-              dataJson[cols[i]] = !isNaN(d[i].value) ? d[i].value : 0;
-          } else {
-              dataJson[cols[i]] = d[i].value;
-          }
-        }
-          
+            dataJson[cols[i]] = d[i].value
+        
+        }  
           dataArr.push(dataJson)
       });
-      
 
-        let field = dataTable.columns.find(column => column.fieldName === "Impressions");
-        let list = [];
-        for (let row of dataTable.data) {
-          list.push(row[field.index].value);
-        }
-        let values = list.filter((el, i, arr) => arr.indexOf(el) === i);
+  
         const {data} = dataArr
         const {columns} = dataTable
 
