@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/d3xtableau/flexi-test/flexiTable/my-app/static/css/main.d7096ce0.chunk.css",
+    "main.js": "/d3xtableau/flexi-test/flexiTable/my-app/static/js/main.bf9f97bc.chunk.js",
+    "main.js.map": "/d3xtableau/flexi-test/flexiTable/my-app/static/js/main.bf9f97bc.chunk.js.map",
+    "runtime-main.js": "/d3xtableau/flexi-test/flexiTable/my-app/static/js/runtime-main.0fb4d5d9.js",
+    "runtime-main.js.map": "/d3xtableau/flexi-test/flexiTable/my-app/static/js/runtime-main.0fb4d5d9.js.map",
+    "static/css/2.3d5167d2.chunk.css": "/d3xtableau/flexi-test/flexiTable/my-app/static/css/2.3d5167d2.chunk.css",
+    "static/js/2.347a16c0.chunk.js": "/d3xtableau/flexi-test/flexiTable/my-app/static/js/2.347a16c0.chunk.js",
+    "static/js/2.347a16c0.chunk.js.map": "/d3xtableau/flexi-test/flexiTable/my-app/static/js/2.347a16c0.chunk.js.map",
+    "index.html": "/d3xtableau/flexi-test/flexiTable/my-app/index.html",
+    "static/css/2.3d5167d2.chunk.css.map": "/d3xtableau/flexi-test/flexiTable/my-app/static/css/2.3d5167d2.chunk.css.map",
+    "static/css/main.d7096ce0.chunk.css.map": "/d3xtableau/flexi-test/flexiTable/my-app/static/css/main.d7096ce0.chunk.css.map",
+    "static/js/2.347a16c0.chunk.js.LICENSE.txt": "/d3xtableau/flexi-test/flexiTable/my-app/static/js/2.347a16c0.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0fb4d5d9.js",
+    "static/css/2.3d5167d2.chunk.css",
+    "static/js/2.347a16c0.chunk.js",
+    "static/css/main.d7096ce0.chunk.css",
+    "static/js/main.bf9f97bc.chunk.js"
+  ]
+}
