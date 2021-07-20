@@ -1,8 +1,28 @@
 'use strict';
 (function() {
+    // $(document).ready(function(){
+   
+    //    $("#pdfDownloader").click(function(){
+       
+    //        html2canvas(document.getElementById("wrapper"), {
+    //            onrendered: function(canvas) {
+   
+    //                // var imgData = canvas.toDataURL('image/png');
+    //                // console.log('Report Image URL: '+imgData);
+    //                var doc = new jsPDF('p', 'mm', [297, 210]); 
+                   
+    //                // doc.addImage(imgData, 'PNG', 10, 10);
+    //                doc.save('test.pdf');
+    //            }
+    //        });
+   
+    //    });
+    // })
 
     let removeEventListener;
     let filteredColumns = [];
+
+   
 
     $(document).ready(function() {
         tableau.extensions.initializeAsync().then(function() {
@@ -57,14 +77,16 @@
             worksheetData.columns.map(d => {
                 cols.push(d.fieldName);
             })
-            
+
+            console.log(cols)
+
             let newArr = [];
             let dataJson;
             let partnerList = {}
             worksheetData.data.map(d => {
                 dataJson = {};
                      for (let i=0; i < cols.length; i++){
-                       if (cols[i].includes("AGG(4. VCR)")){
+                       if (cols[i].includes("AGG(3. CTR)")){
                          dataJson[cols[i]] = !isNaN(d[i].value) ? d[i].value : 0;
                        } else {
                        dataJson[cols[i]] = d[i].value;
@@ -133,6 +155,7 @@
                 sumsArr.push(value)
 
             sumsArr.sort((a, b) => (a.date > b.date) ? 1 : -1)
+
             console.log(sumsArr)
             drawDotChart(sumsArr, filtered_partners);
 
@@ -153,13 +176,13 @@
             tableau.TableauEventType.FilterChanged, marksSelectedEventHandler);
     }
 
-    function saveSheetAndLoadSelectedMarks(worksheetName) {
-        tableau.extensions.settings.set('sheet', worksheetName);
-        tableau.extensions.settings.saveAsync();
-        loadSelectedMarks(worksheetName);
-        console.log('hi')
+    // function saveSheetAndLoadSelectedMarks(worksheetName) {
+    //     tableau.extensions.settings.set('sheet', worksheetName);
+    //     tableau.extensions.settings.saveAsync();
+    //     loadSelectedMarks(worksheetName);
+    //     console.log('hi')
 
-    }
+    // }
 
     function filterByColumn(columnIndex, fieldName) {
         const columnValues = demoHelpers.getValuesInColumn(columnIndex);
@@ -182,6 +205,9 @@
         filteredColumns = [];
     }
 
+  
+
+
 
     function drawDotChart(arr, partnersArr) {
         $('#wrapper').empty();
@@ -191,7 +217,7 @@
         const formatDate2 = d3.timeFormat("%b %d")
         const xAccessor = d => Date.parse(dateParser(d.date))
         const yAccessor = d => d.impressions
-        const y2Accessor = d => d.ctr
+        var y2Accessor = d => d.ctr
         const clicks = d => d.clicks
         const add_commas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         const client = d => d.client
@@ -210,14 +236,15 @@
                 }
             }
        }
+       
+    //    for ( let i=0; i < arr.length ; i++){
+    //         console.log(arr[i].ctr)
+    //    }
+
 
        var average_y2 = d3.mean(area_chart_elem, y2Accessor).toFixed(2);
 
-
-       console.log(area_chart_elem)
-
-
-        const width = d3.min([
+       const width = d3.min([
             window.innerWidth * 0.95,
         ])
         const height = d3.min([
@@ -274,11 +301,6 @@
             .domain(d3.extent(area_chart_elem, y2Accessor))
             .range([dimensions.boundedHeight, 0])
             // .nice()
-
-        const b_sizze = d3.scaleLinear()
-            .domain(d3.extent(area_chart_elem, clicks))
-            .range([2, 8])
-
 
 
         function x_gridlines() {
@@ -460,25 +482,6 @@
 
 
 
-        //
-        // area.selectAll("line")
-        //    .data(arr)
-        //    .enter()
-        //    .append("line")
-        //    .attr("stroke","#1b2326")
-        //    .style("opacity",0)
-        //    .attr("x1", d => xScale(xAccessor(d)))
-        //    .attr("y1", d => yScale(yAccessor(d)))
-        //    .attr("x2",d => xScale(xAccessor(d)))
-        //    .attr("y2",dimensions.boundedHeight);
-        //
-        // area.selectAll("line")
-        //     .on("mouseover", mouseOnLine)
-        //     .on("mouseout", mouseOutLine);
-
-
-
-
 
 
         const curve2 = d3.curveLinear
@@ -497,27 +500,6 @@
             .attr("stroke-width","2px")
             .attr("stroke", "url(#colorId)")
             .attr("d", line1(area_chart_elem))
-        //
-        //
-        // area.selectAll("circle")
-        //    .data(arr)
-        //    .enter()
-        //    .append("circle")
-        //    .attr("class", "endPoints")
-        //    .attr("fill", "#1B2326")
-        //    .style("opacity", 0.6)
-        //    .attr("stroke", "none")
-        //    .attr("cx", d => xScale(xAccessor(d)))
-        //    .attr("cy", d => y2Scale(y2Accessor(d)))
-        //    .attr("r", d => b_sizze(clicks(d)))
-        //
-        // area.selectAll("circle")
-        //     .on("mouseover", mouseOn)
-        //     .on("mouseout", mouseOut);
-
-        // area.selectAll("path")
-        //     .on("mouseover", highlight)
-        //     .on("mouseout", noHighlight);
 
             function highlight(d) {
                     d3.select('.areas')
